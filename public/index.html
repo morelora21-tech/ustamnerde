@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ustamnerde · Şehrindeki ustayı bul</title>
+<meta name="description" content="Elektrik, su tesisatı, boya ve klima ustalarını şehrine göre bul, uygulama içinden yaz.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#F4F5F7;--card:#fff;--ink:#14202E;--mut:#5E6B7A;--line:#DCE0E5;--navy:#1E3F66;--blue:#1E3F66;--yel:#F5B800;--ok:#1E8A5A;--bad:#C0392B}
+@media(prefers-color-scheme:dark){:root{--bg:#0F1722;--card:#18232F;--ink:#EEF1F4;--mut:#9AA6B3;--line:#2A3745;--blue:#7FA7D9;--ok:#4CC38A;--bad:#FF7B6B}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.5 Figtree,system-ui,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+main{flex:1}
+h1,h2,h3,.logo{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.mut{color:var(--mut);font-size:14px}
+.hd{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.hdin{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{font-size:24px;font-weight:800;letter-spacing:-.5px;color:#fff;text-decoration:none}.logo b{color:var(--yel)}
+#nav{display:flex;align-items:center;gap:6px}
+.nl{background:none;border:0;color:#fff;padding:9px 12px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none}.nl:hover{background:rgba(255,255,255,.14)}
+.btn{background:var(--yel);color:#14202E;border:0;border-radius:12px;font-weight:700;padding:12px 20px;cursor:pointer}.btn.s{padding:9px 14px;font-size:15px}
+.btn.g{background:var(--bg);color:var(--ink);border:1px solid var(--line)}.btn:disabled{opacity:.6}
+.hero{background:var(--navy);color:#fff;padding:52px 0 84px}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.08;font-weight:800;max-width:640px}
+.hero p{margin:14px 0 0;font-size:18px;opacity:.88;max-width:560px}
+.sbar{margin-top:28px;max-width:780px;background:var(--card);color:var(--ink);border-radius:18px;padding:8px;display:flex;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.22)}
+.sbar select,.sbar input{border:0;background:transparent;padding:12px;min-width:0;outline:0}
+.sbar select{border-right:1px solid var(--line);font-weight:600}.sbar input{flex:1}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-46px;position:relative}
+.cat{background:var(--card);border:2px solid transparent;border-radius:18px;padding:18px 10px 14px;text-align:center;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(20,32,46,.08)}
+.cat svg{width:36px;height:36px;display:block;margin:0 auto 8px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cat[aria-pressed=true]{border-color:var(--yel);background:color-mix(in srgb,var(--yel) 16%,var(--card))}
+.sec{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:34px 0 14px}.sec h2{font-size:24px}
+.srt{display:flex;gap:12px;align-items:center}
+.srt select,.f{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:40px}
+.card{display:grid;gap:10px;align-content:start;text-align:left;background:var(--card);border:1px solid transparent;border-radius:18px;padding:18px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,32,46,.12)}
+.ct{display:flex;gap:12px;align-items:center}
+.av{width:52px;height:52px;border-radius:14px;flex:none;display:grid;place-items:center;font:800 20px 'Bricolage Grotesque';color:#fff}
+.nm{font:700 17px 'Bricolage Grotesque'}
+.bio{margin:0;color:var(--mut);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:42px}
+.crow{display:flex;justify-content:space-between;align-items:center}
+.tag{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-radius:8px;padding:2px 8px;font-weight:600;font-size:13px}
+.empty{padding:36px 20px;text-align:center;color:var(--mut)}
+.authcard{max-width:440px;margin:44px auto;background:var(--card);border-radius:22px;padding:28px}
+.authcard h2{font-size:26px}.authcard p{margin:4px 0}
+.f{width:100%;margin-top:10px;background:var(--bg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:8px 14px;cursor:pointer;font-size:14px}.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.lk{background:none;border:0;cursor:pointer;margin-top:12px;display:block;width:100%;padding:8px}
+.err{color:var(--bad);min-height:22px;margin:8px 0 0;font-size:14px}
+.msgs{display:grid;grid-template-columns:340px 1fr;gap:16px;height:calc(100vh - 150px);min-height:520px;padding:20px 0}
+.mlist,.mthread{background:var(--card);border-radius:18px;overflow:hidden}
+.mlist{overflow-y:auto}.mthread{display:flex;flex-direction:column}
+.warn{background:color-mix(in srgb,var(--yel) 25%,var(--card));padding:9px 14px;font-size:13px}
+.item{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px;cursor:pointer}
+.item:hover,.item.on{background:var(--bg)}.item>div:nth-child(2){flex:1;min-width:0}
+.item .it-t{display:flex;justify-content:space-between;gap:8px;font-weight:700}
+.item .it-s{color:var(--mut);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.th-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);font-size:17px}
+.bkb{display:none;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 12px;cursor:pointer}
+.body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.bub{max-width:70%;padding:9px 13px;border-radius:16px 16px 16px 4px;background:var(--bg);overflow-wrap:anywhere}
+.bub.me{align-self:flex-end;background:#1E3F66;color:#fff;border-radius:16px 16px 4px 16px}
+.bub small{display:block;font-size:11px;opacity:.7;margin-top:3px}
+.compose{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.compose input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:11px}
+dialog{border:0;border-radius:22px;padding:24px;width:min(560px,calc(100% - 24px));background:var(--card);color:var(--ink);max-height:90vh;overflow:auto}
+dialog::backdrop{background:rgba(10,18,28,.55)}
+dialog h3{font-size:24px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.kv div{background:var(--bg);border-radius:12px;padding:10px;text-align:center;font-size:13px;color:var(--mut)}
+.kv b{display:block;font:800 18px 'Bricolage Grotesque';color:var(--ink)}
+.ft{border-top:1px solid var(--line);padding:22px 0;color:var(--mut);font-size:14px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-size:15px;display:none;z-index:50}
+@media(max-width:800px){
+ .cats{grid-template-columns:repeat(2,1fr)}.hero{padding:36px 0 80px}.sbar{flex-wrap:wrap}.sbar select{border-right:0;width:100%}.sbar input{width:100%;flex:none}.sbar .btn{width:100%}
+ .msgs{grid-template-columns:1fr;height:calc(100vh - 130px)}.mthread{display:none}.msgs.open .mlist{display:none}.msgs.open .mthread{display:flex}.bkb{display:inline-block}.bub{max-width:85%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hd"><div class="wrap hdin"><a class="logo" href="#/">usta<b>m</b>nerde</a><nav id="nav" aria-label="Ana menü"></nav></div></header>
+<main id="main"></main>
+<footer class="ft"><div class="wrap">© ustamnerde · Usta ve müşteri görüşmeleri yalnızca uygulama içinde yapılır.</div></footer>
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

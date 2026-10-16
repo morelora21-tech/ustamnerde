@@ -1,0 +1,10 @@
+# Netlify sadece siteyi (public klasörü) yayınlar. Sunucu (server.js) Netlify'da çalışmaz,
+# ayrı bir Node.js sunucusunda çalışmalı. Aşağıdaki adresi o sunucunun adresiyle değiştir.
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://BURAYA-SUNUCU-ADRESI/api/:splat"
+  status = 200
+  force = true
